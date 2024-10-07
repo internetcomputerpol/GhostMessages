@@ -1,59 +1,46 @@
-# `Moto`
+# `Ghost Messages`
 
-Welcome to your new `Moto` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+The application is designed to display a message after providing an ID and password, and then delete it immediately after reading.
+If you want to quickly share a key, password, hash, or data regarding a port, configuration, number, or code, GhostMessages is for you. Thanks to messages that disappear like a ghost after being read, you can rest assured that no history will be left behind, and by going through consensus, the record will be deleted from all replicas
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+----------------------------------------!!!
+Tip: If you plan to set such a message for a longer period, for example, someone will be able to read it in a few hours, consider using a stronger password. Good practice suggests a password of at least 14 characters, including a special character like !@#$%^&* and a number
+----------------------------------------!!!
 
-To learn more before you start working with `Moto`, see the following documentation available online:
+What is this application for ?
+The Ghost Messages application was created to generate self-destructing messages. You set a password and enter the message content, after which you receive an ID. You can give this ID and password to someone. After the message is read, it will be deleted, meaning the reader can only view it once
+
+How long will my message be stored ?
+Until someone reads it using the ID and password. After the message is read, its content is permanently deleted
+
+What can I use this for?
+For anything you need to share without leaving a trace. Do you need to send someone a bank account number and don’t want to leave a trace in an email or on Facebook? Do you need to send someone a software key or confidential information? Ghost Messages is made for that. The application runs on the ICP blockchain, which makes it independent from centralized entities
+
+How to save and read a disappearing message?
+1) Select "Write Message"
+
+2) Enter the message content
+
+3) Enter the password
+
+4) Re-enter the password
+
+5) Click the blue "Save" button
+
+6) Wait about 2 seconds (A pop-up window will appear)
+
+7) An ID for your message will appear on a black background
+
+8) You can copy this ID by clicking the green "Copy" button
+
+9) Give someone the ID and password for the message
+
+How to read a disappearing message if I received the ID and password ?
+To read the message, if you already have the ID and password, go to 'Read Message', the green button on the top black bar, and enter the message ID and password in the respective fields, then press the blue 'Show Message' button. The message you read will be deleted immediately after you display it, so you will only be able to see it once. The ID is numerical; note that there are no spaces at the beginning or end of the ID. The password can be anything. You can copy the message using the green 'Copy' button
+
 
 - [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
 - [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
 - [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
 - [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
 
-If you want to start working on your project right away, you might want to try the following commands:
-
-```bash
-cd Moto/
-dfx help
-dfx canister --help
-```
-
-## Running the project locally
-
-If you want to test your project locally, you can use the following commands:
-
-```bash
-# Starts the replica, running in the background
-dfx start --background
-
-# Deploys your canisters to the replica and generates your candid interface
-dfx deploy
-```
-
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
-
-If you have made changes to your backend canister, you can generate a new candid interface with
-
-```bash
-npm run generate
-```
-
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
-
-If you are making frontend changes, you can start a development server with
-
-```bash
-npm start
-```
-
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
-
-### Note on frontend environment variables
-
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
-
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
