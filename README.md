@@ -1,50 +1,59 @@
+---
+
 # `Ghost Messages`
 
+The **Ghost Messages** application is designed to display a message after providing an ID and password, and then delete it immediately after being read. If you need to quickly share a key, password, hash, or data regarding a port, configuration, number, or code, GhostMessages is perfect for you. Thanks to its self-destructing messages, you can be sure that no history is left behind. Once a message is read, it’s deleted across all replicas thanks to consensus.
 
-					
+### Tip:
+If you plan to keep the message available for a longer period (e.g., someone will read it in a few hours), consider using a stronger password. **Best practice** suggests using a password with **at least 14 characters**, including a **special character** (like `!@#$%^&*`) and a **number**.
 
-The application is designed to display a message after providing an ID and password, and then delete it immediately after reading.
-If you want to quickly share a key, password, hash, or data regarding a port, configuration, number, or code, GhostMessages is for you. Thanks to messages that disappear like a ghost after being read, you can rest assured that no history will be left behind, and by going through consensus, the record will be deleted from all replicas
+---
 
+## What is this application for?
+The Ghost Messages application allows you to create **self-destructing messages**. You set a password and enter the message content, then receive an ID. This ID, along with the password, can be shared with someone. Once the message is read, it’s permanently deleted, allowing the recipient to view it only once.
 
+---
 
-Tip: If you plan to set such a message for a longer period, for example, someone will be able to read it in a few hours, consider using a stronger password. Good practice suggests a password of at least 14 characters, including a special character like !@#$%^&* and a number
+## How long will my message be stored?
+Your message will be stored until it is read using the ID and password. After the message is read, it is **permanently deleted**.
 
+---
 
-What is this application for ?
-The Ghost Messages application was created to generate self-destructing messages. You set a password and enter the message content, after which you receive an ID. You can give this ID and password to someone. After the message is read, it will be deleted, meaning the reader can only view it once
+## What can I use this for?
+Use Ghost Messages for anything you need to share **without leaving a trace**. Whether you need to send a bank account number, software key, or other confidential information without leaving a digital footprint, Ghost Messages is ideal. Running on the **ICP blockchain**, the app operates independently from centralized entities, enhancing privacy and security.
 
-How long will my message be stored ?
-Until someone reads it using the ID and password. After the message is read, its content is permanently deleted
+---
 
-What can I use this for?
-For anything you need to share without leaving a trace. Do you need to send someone a bank account number and don’t want to leave a trace in an email or on Facebook? Do you need to send someone a software key or confidential information? Ghost Messages is made for that. The application runs on the ICP blockchain, which makes it independent from centralized entities
+## How to save and read a disappearing message?
 
-How to save and read a disappearing message?
-1) Select "Write Message"
+### To save a message:
+1. Click "Write Message".
+2. Enter your message content.
+3. Enter a password.
+4. Re-enter the password.
+5. Click the blue "Save" button.
+6. Wait about 2 seconds for the pop-up confirmation.
+7. An ID for your message will appear on a black background.
+8. Copy the ID by clicking the green "Copy" button.
+9. Share the ID and password with the recipient.
 
-2) Enter the message content
+### To read a message:
+1. Go to 'Read Message' by clicking the green button on the top black bar.
+2. Enter the message ID and password in the respective fields.
+3. Press the blue 'Show Message' button.
+4. The message will display and be **deleted immediately** after being shown, meaning it can only be viewed **once**.
+5. You can copy the message using the green 'Copy' button.
 
-3) Enter the password
+> **Note**: The ID is numerical and should be entered without spaces. The password can be anything, but for added security, consider using a strong password as suggested above.
 
-4) Re-enter the password
+---
 
-5) Click the blue "Save" button
-
-6) Wait about 2 seconds (A pop-up window will appear)
-
-7) An ID for your message will appear on a black background
-
-8) You can copy this ID by clicking the green "Copy" button
-
-9) Give someone the ID and password for the message
-
-How to read a disappearing message if I received the ID and password ?
-To read the message, if you already have the ID and password, go to 'Read Message', the green button on the top black bar, and enter the message ID and password in the respective fields, then press the blue 'Show Message' button. The message you read will be deleted immediately after you display it, so you will only be able to see it once. The ID is numerical; note that there are no spaces at the beginning or end of the ID. The password can be anything. You can copy the message using the green 'Copy' button
-
-
+## Useful Links:
 - [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
 - [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
 - [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
 - [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
 
+---
+
+W tej formie README zawiera przejrzyste sekcje, dzięki którym użytkownicy szybko zrozumieją, jak działa aplikacja, jakie są jej funkcje, oraz jak z niej korzystać.
