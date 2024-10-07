@@ -1,12 +1,15 @@
 # `Ghost Messages`
-                   
+
+
+					
 
 The application is designed to display a message after providing an ID and password, and then delete it immediately after reading.
 If you want to quickly share a key, password, hash, or data regarding a port, configuration, number, or code, GhostMessages is for you. Thanks to messages that disappear like a ghost after being read, you can rest assured that no history will be left behind, and by going through consensus, the record will be deleted from all replicas
 
-----------------------------------------!!!
+
+
 Tip: If you plan to set such a message for a longer period, for example, someone will be able to read it in a few hours, consider using a stronger password. Good practice suggests a password of at least 14 characters, including a special character like !@#$%^&* and a number
-----------------------------------------!!!
+
 
 What is this application for ?
 The Ghost Messages application was created to generate self-destructing messages. You set a password and enter the message content, after which you receive an ID. You can give this ID and password to someone. After the message is read, it will be deleted, meaning the reader can only view it once
