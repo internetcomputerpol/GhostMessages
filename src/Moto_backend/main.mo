@@ -88,7 +88,7 @@ actor {
     
 
     
-    private  func _pobierzWszystkieRekordy(): async [Rekord] {
+    public  func _pobierzWszystkieRekordy(): async [Rekord] {
         return rekordy;
     };
 }

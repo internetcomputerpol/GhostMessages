@@ -12,18 +12,22 @@ const content = ref('');
 const password = ref('');
 const idx = ref();
 const passx = ref('');
+const hashedPassword = ref('');
 const output = ref('>_Message Text ...');
 const confirmPassword = ref('');
 let isLoading = ref(false);
 const passwordsMatch = computed(() => password.value === confirmPassword.value);
 
-async function checkMessage()
+async function checkMessage(pass)
 {
   try {
       isLoading.value = true;
-      const res = await Moto_backend.pobierzRekord(idx.value,passx.value);
+      const res = await Moto_backend.pobierzRekord(idx.value,pass);
       output.value = res;
       isLoading.value = false;
+      password.value = '';
+      passx.value = '';
+      id_field.value = '';
      }
   catch (error) 
   {
@@ -32,13 +36,16 @@ async function checkMessage()
 
 }
 
-async function saveContent() {
+async function saveContent(pass) {
   try {
     isLoading.value = true;
-    const result = await Moto_backend.zapiszTekst(content.value, password.value); 
+    const result = await Moto_backend.zapiszTekst(content.value, pass); 
     id_field.value = result;
     content.value='';
     isLoading.value = false;
+    password.value = '';
+    passx.value = '';
+    confirmPassword.value = '';
       } catch (error) {
       console.error('Error retrieving data from the canister', error);
       }
@@ -52,6 +59,38 @@ async function copyToClipboard(text) {
       } catch (err) {
         console.error('Failed to copy: ', err);
       }
+}
+
+async function hashPassword(pas) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(pas);  
+  const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);  
+  
+  
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  return hashHex; 
+}
+
+
+async function sendToServer() {
+  try {
+    
+    const datx = await hashPassword(password.value); 
+    const result = await checkMessage(datx);  
+    
+    
+  } catch (error) {
+    alert('Cannot Save any Data');
+  }
+}
+
+
+async function saveToServer() 
+{
+  const dat = await hashPassword(password.value);
+  const a = await saveContent(dat);
 }
 
 let currentTab = ref('tab1');
@@ -85,19 +124,19 @@ let currentTab = ref('tab1');
       v-model="password"
       type="password"
       class="password-input"
-      placeholder="Enter password"
+      placeholder="Enter Password "
     />
 
     <input
       v-model="confirmPassword"
       type="password"
       class="password-input"
-      placeholder="Confirm password"
+      placeholder="Confirm Password"
     />
 
      <div class="copy-container">
     <button
-      @click="saveContent"
+      @click="saveToServer"
       class="save-button"
       :disabled="!passwordsMatch"
     >Save</button>
@@ -132,9 +171,13 @@ let currentTab = ref('tab1');
     <input class="input" v-model="idx" id="idx" type="number" >
 
     <label for="passx">Password:</label>
-    <input class="input" v-model="passx" id="passx" type="password">
 
-    <button class="save-button" @click="checkMessage">Show Message</button>
+  
+   <input class="input" id="passx" v-model="password" type="password" placeholder="Enter your password">
+
+
+
+    <button class="save-button" @click="sendToServer">Show Message</button>
      <button class="save-button-clip" @click="copyToClipboard('' + output)">
        Copy
       </button>
