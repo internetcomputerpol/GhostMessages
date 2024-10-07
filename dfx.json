@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "Moto_backend": {
+      "main": "src/Moto_backend/main.mo",
+      "type": "motoko"
+    },
+    "Moto_frontend": {
+      "dependencies": [
+        "Moto_backend"
+      ],
+      "source": [
+        "src/Moto_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "Moto_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
