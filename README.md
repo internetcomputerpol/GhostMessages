@@ -1,10 +1,6 @@
 # `Ghost Messages`
                    
-|
-|
-|
-|__________________________________________________
-|
+
 The application is designed to display a message after providing an ID and password, and then delete it immediately after reading.
 If you want to quickly share a key, password, hash, or data regarding a port, configuration, number, or code, GhostMessages is for you. Thanks to messages that disappear like a ghost after being read, you can rest assured that no history will be left behind, and by going through consensus, the record will be deleted from all replicas
 
