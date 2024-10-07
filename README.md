@@ -55,5 +55,5 @@ Use Ghost Messages for anything you need to share **without leaving a trace**. W
 - [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
 
 ---
-
-W tej formie README zawiera przejrzyste sekcje, dzięki którym użytkownicy szybko zrozumieją, jak działa aplikacja, jakie są jej funkcje, oraz jak z niej korzystać.
+dApp link: https://d7szd-saaaa-aaaaj-aztva-cai.icp0.io/
+Have Fun !!!
