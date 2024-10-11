@@ -14,5 +14,9 @@
   "type": "module",
   "workspaces": [
     "src/Moto_frontend"
-  ]
+  ],
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "quill": "^2.0.2"
+  }
 }

@@ -1,29 +1,59 @@
 <script setup>
+import CryptoJS from 'crypto-js';
 import { ref, computed } from 'vue';
 import { Moto_backend } from 'declarations/Moto_backend/index';
 
-// Zmienne
+
+// Zmienne nawet sporo zmiennych 
+
 let first_text = "The Message ID :";
 let second_text = "Use Id and Password to Read Message";
 let id_field = ref("Unknown");
 let zmienna = ref('');
 const textRef = ref(null);
 const content = ref('');
+const content2 = ref('');
 const password = ref('');
 const idx = ref();
 const passx = ref('');
 const hashedPassword = ref('');
 const output = ref('>_Message Text ...');
 const confirmPassword = ref('');
+let startTime = ref(Date.now()); 
+const idqua = ref('');
+const isHuman = ref(true);
 let isLoading = ref(false);
+let dynamicHeight = ref(350);
+let encryptionKeyhidden = ref('49435077696C6C486974363030244F6E6544617942726F');
 const passwordsMatch = computed(() => password.value === confirmPassword.value);
+
+
+// -------  Funkcja do Sprawdzania ( Pobierania wiadomości z serera )
+// ------------------ ver 1.0.2 Ghost Messages @
+// ------------------ Projekt szyfrowanych wiadomości na Blockchainie ICP
+// ---------------- + Zapraszam na YT na Internet Computer PL
+// PL24
+
 
 async function checkMessage(pass)
 {
-  try {
+  if ( isHuman.value && idqua.value ==='') 
+  {
+  try 
+  {
       isLoading.value = true;
-      const res = await Moto_backend.pobierzRekord(idx.value,pass);
-      output.value = res;
+      
+     const res = await Moto_backend.pobierzRekord(idx.value, pass);
+     const messageDecrypted = decryptMessage(pass, res);
+
+   if (messageDecrypted) 
+   {
+
+    output.value = messageDecrypted;
+   } else {
+    output.value = 'Decryption failed or message not found';
+   }
+
       isLoading.value = false;
       password.value = '';
       passx.value = '';
@@ -33,22 +63,46 @@ async function checkMessage(pass)
   {
    alert('Message with that Password and Id not Found');
   }
+  }
+  else 
+  {
+    alert('Data not Fetched');
+  }
 
 }
 
+
+// ------------------ Funkcja zapisuje dane wiadomości 
+// Tworzy Hasz z hasła -> używa hasza z hasła do zaszyfrowania wiadomości 
+// To samo robi podczas odszyfrowywania z hasła tworzy klucz do odszyfrowania wiadomści 
+// Pamiętając, że AES jest funkcją symetrycznego szyfrowania to zawsze zwróci z hasła  taki sam klucz
+
 async function saveContent(pass) {
+
+
+ if ( isHuman.value && idqua.value ==='')  // Sprawdzamy na obecność innych odwiedzających niż ludzie 
+ {
   try {
     isLoading.value = true;
-    const result = await Moto_backend.zapiszTekst(content.value, pass); 
+    const messageEncrypted = encryptMessage(pass, content.value);
+    const result = await Moto_backend.zapiszTekst(messageEncrypted, pass); 
+
     id_field.value = result;
     content.value='';
     isLoading.value = false;
     password.value = '';
     passx.value = '';
     confirmPassword.value = '';
+    startTime.value = Date.now();                             // Wartość zmiennej dla czasu na obecność nieproszonych gości
       } catch (error) {
       console.error('Error retrieving data from the canister', error);
       }
+  }
+else 
+{
+alert('Error blocked syntax catched');
+}
+
 }
 
 async function copyToClipboard(text) {
@@ -60,6 +114,8 @@ async function copyToClipboard(text) {
         console.error('Failed to copy: ', err);
       }
 }
+//------------------- Funkcja haszująca hasło przed wysłaniem do Backendu utworzony hasz zapisujemy w zmiennej obiektu Motoko
+                      // W kodzie porównujemy późiej dwa hasze 
 
 async function hashPassword(pas) {
   const encoder = new TextEncoder();
@@ -73,28 +129,113 @@ async function hashPassword(pas) {
   return hashHex; 
 }
 
+// ------------------------------------------ Funkcja sprawdzająca wiadomość ( Odczyt 2gi przycisk )
 
 async function sendToServer() {
-  try {
-    
+ 
+ if(isHuman.value && idqua.value==='')
+ {
+   if (isNumber(idx.value))
+{
+ try {
+   
     const datx = await hashPassword(password.value); 
     const result = await checkMessage(datx);  
+     startTime.value = Date.now();
     
     
   } catch (error) {
-    alert('Cannot Save any Data');
+    alert('Cannot Send any Data');
   }
+
+ }
+ else 
+ {
+alert('Id not Valid check spaces before number or type it again');
+ }
 }
 
+
+}
+// -------------------------- Szyfrowanie Wiadomości po stronie Klienta ----------------------
+
+function encryptMessage(passwd, messx) {
+    try {
+        
+        const key = CryptoJS.SHA256(passwd).toString(CryptoJS.enc.Hex);  
+        const encrypted = CryptoJS.AES.encrypt(messx, key).toString();
+        return encrypted;
+    } catch (error) {
+        alert('Encryption Message problem ');
+        return null; 
+    }
+}
+
+// -------------------------- Deszyfrowanie  Wiadomości po stronie Klienta ----------------------
+
+
+function decryptMessage(passwd, mess) {
+    try {
+
+        const key = CryptoJS.SHA256(passwd).toString(CryptoJS.enc.Hex);  
+        
+        const decrypted = CryptoJS.AES.decrypt(mess, key).toString(CryptoJS.enc.Utf8);
+        return decrypted;
+    } catch (error) {
+        alert('Decryption Message problem');
+        return null;
+    }
+}
+
+
+//--------------------------------------------  Funkcja do wywołania haszowania i zapisania wiadomości i hasza
 
 async function saveToServer() 
 {
+  if(isHuman.value && idqua.value==='')
+ {
+  if (content.value != "")
+  {
   const dat = await hashPassword(password.value);
   const a = await saveContent(dat);
+  }
+  else 
+  {
+    alert('Message field cannot be empty dude');
+  }
+ }
+ else 
+ {
+  alert('..Reload the Page..');
+ }
+}
+
+// ------------------------------------------------------- Funkcja na nie ludzką ingerencję wiadomo o co chodzi ... 8E
+
+function handleSubmit() {
+    const timeSpent = Date.now() - startTime.value;
+
+    if (timeSpent < 400) {  
+        isHuman.value = false;
+        alert("Time Stamp dont be a bot do it slow"); 
+        return false;
+    } else {
+        isHuman.value = true;
+        return true;
+    }
+}
+
+
+// ------------------------------------------------- Sprawdza czy id jest właściwym numerem 
+   function isNumber(value) {
+    return typeof value === 'number' && !isNaN(value);
 }
 
 let currentTab = ref('tab1');
+startTime.value = Date.now();  // To dla weryfikacji nie ludzi 8E
+
 </script>
+
 <template>
 <title>Ghost Messages</title>
  <div class="header">
@@ -102,14 +243,16 @@ let currentTab = ref('tab1');
      <img src="./logo.png" alt="Logo" />
     </div>
     <div class="buttons">
-      <button @click="currentTab = 'tab1'" class="header-btn">Write Message</button>
-      <button @click="currentTab = 'tab2'" class="header-btn2">Read Message</button>
-       <button @click="currentTab = 'tab3'" class="header-btn3">Info</button>
+      <button @click="currentTab = 'tab1'; startTime = Date.now()" class="header-btn">Write Message</button>
+      <button @click="currentTab = 'tab2'; startTime = Date.now()" class="header-btn2">Read Message</button>
+       <button @click="currentTab = 'tab3'; startTime = Date.now()" class="header-btn3">Info</button>
     </div>
   </div>
 <div style="padding:20px;">
 </div>
 <div v-if="currentTab === 'tab1'">
+
+<form @submit.prevent="handleSubmit" class="editor-container">
 <div class="editor-container">
 
     <textarea
@@ -119,6 +262,8 @@ let currentTab = ref('tab1');
       placeholder="Enter the text to hide here..."
       rows="10"
     ></textarea>
+
+<input v-model="idqua" type="text"  style="  position: absolute; left: -9999px; top: -9999px; opacity: 0;" placeholder="Enter Password Sec" />
 
     <input
       v-model="password"
@@ -138,7 +283,8 @@ let currentTab = ref('tab1');
     <button
       @click="saveToServer"
       class="save-button"
-      :disabled="!passwordsMatch"
+       :disabled="!passwordsMatch || content === '' || password === '' || confirmPassword === '' || password !== confirmPassword"
+             
     >Save</button>
    
      <button class="save-button-clip" @click="copyToClipboard('' + id_field)">
@@ -162,22 +308,25 @@ let currentTab = ref('tab1');
    
     <p v-if="!passwordsMatch" class="error-message">Passwords do not match!</p>
   </div>
+   </form>
   </div>
   <div v-if="currentTab === 'tab2'">
 
-
+ <form @submit.prevent="handleSubmit" class="editor-container">
  <div class="editor-container" style="margin-top:75px;">
     <label for="idx" style="margin-top:35px;">ID:</label>
-    <input class="input" v-model="idx" id="idx" type="number" >
+    <input class="input" v-model="idx" id="idx" type="number"  placeholder="Enter Message ID here...">
 
     <label for="passx">Password:</label>
 
   
    <input class="input" id="passx" v-model="password" type="password" placeholder="Enter your password">
 
+<input v-model="idqua" type="text"  style="  position: absolute; left: -9999px; top: -9999px; opacity: 0;" placeholder="Enter Password Sec" />
 
-
-    <button class="save-button" @click="sendToServer">Show Message</button>
+    <button class="save-button" @click="sendToServer" 
+    :disabled="password === '' || idx === ''"
+    >Show Message</button>
      <button class="save-button-clip" @click="copyToClipboard('' + output)">
        Copy
       </button>
@@ -188,18 +337,18 @@ let currentTab = ref('tab1');
     <i class="pi pi-check" style="font-size: 2rem;"></i>
     </div>
 
-
-    
 <textarea
-  v-model="content"
+  id="toto"
+  v-model="output"
   ref="textRef"
   class="editor"
-  :placeholder="output"
   rows="10"
-   readonly
-   style="margin-top:10px;"
+  style="margin-top:10px;"
 ></textarea>
-  </div>
+
+</div>
+ </form>
+
   </div>
   <div v-if="currentTab === 'tab3'">
 
@@ -267,8 +416,6 @@ let currentTab = ref('tab1');
     </center>
   </div>
 </div>
-
-
 
 </template>
 
@@ -399,6 +546,7 @@ li p {
   object-fit: cover;
 }
 
+
 .editor-container {
   position: relative; 
   top: 10px; 
@@ -411,6 +559,8 @@ li p {
   margin: 0 auto;
   max-width: 1200px; 
 }
+
+
 
 .editor {
   margin-top:75px;
@@ -479,8 +629,6 @@ li p {
   transition: background-color 0.3s ease;
 }
 
-
-
 .save-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
@@ -496,7 +644,6 @@ li p {
   margin-top: -20px;
   font-weight: bold; 
 }
-
 
 @media (max-width: 768px) {
   .editor-container {
@@ -535,13 +682,12 @@ li p {
   align-items: center; 
 }
 
-
 .loader {
   /* Style dla kręcącego się koła zębatego */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px; /* Odstęp górny */
+  margin-top: 20px;
 }
 
 .done {
@@ -549,7 +695,7 @@ li p {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px; /* Odstęp górny */
+  margin-top: 20px; 
 }
 
 
