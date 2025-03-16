@@ -1,6 +1,6 @@
 ---
 
-# `Ghost Messages`
+# `Ghost Messages` 🔗
 
 https://ghostmessages.ink
 
