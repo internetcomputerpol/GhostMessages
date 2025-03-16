@@ -16,12 +16,12 @@ The Ghost Messages application allows you to create **self-destructing messages*
 
 ---
 
-## How long will my message be stored? ❔
+## How long will my message be stored? 📆
 Your message will be stored until it is read using the ID and password. After the message is read, it is **permanently deleted**.
 
 ---
 
-## What can I use this for? ❔
+## What can I use this for? 🔨
 Use Ghost Messages for anything you need to share **without leaving a trace**. Whether you need to send a bank account number, software key, or other confidential information without leaving a digital footprint, Ghost Messages is ideal. Running on the **ICP blockchain**, the app operates independently from centralized entities, enhancing privacy and security.
 
 ---
@@ -50,7 +50,7 @@ Use Ghost Messages for anything you need to share **without leaving a trace**. W
 
 ---
 
-## Useful Links:
+## Useful Links: 🔗
 - [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
 - [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
 - [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
@@ -60,4 +60,6 @@ Use Ghost Messages for anything you need to share **without leaving a trace**. W
 dApp link: https://d7szd-saaaa-aaaaj-aztva-cai.icp0.io/
 
 Domain Aress from Browser: https://ghostmessages.ink/
+www.namecheap.com ( We can pay for domains with crypto it's Nice 😁 )
+
 Have Fun !!!
