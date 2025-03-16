@@ -60,6 +60,7 @@ Use Ghost Messages for anything you need to share **without leaving a trace**. W
 dApp link: https://d7szd-saaaa-aaaaj-aztva-cai.icp0.io/
 
 Domain Aress from Browser: https://ghostmessages.ink/
+## Good place to buy Domain 4 dApp on ICP:
 www.namecheap.com ( We can pay for domains with crypto it's Nice 😁 )
 
 Have Fun !!!
