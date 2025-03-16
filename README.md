@@ -2,6 +2,8 @@
 
 # `Ghost Messages`
 
+https://ghostmessages.ink
+
 The **Ghost Messages** 👻 application is designed to display a message after providing an ID and password, and then delete it immediately after being read. If you need to quickly share a key, password, hash, or data regarding a port, configuration, number, or code, GhostMessages is perfect for you. Thanks to its self-destructing messages, you can be sure that no history is left behind. Once a message is read, it’s deleted across all replicas thanks to consensus.
 
 ### Tip: 👾
